@@ -18,10 +18,24 @@
               {{ item.nama + ", " + item.umur + " Years Old" }}
             </h5>
             <p class="card-text">{{ item.deskripsi_diri }}</p>
-            <p class="card-text">Email : {{ item.email }}</p>
-            <p class="card-text">Soft Skills : {{ item.soft_skill }}</p>
-            <p class="card-text">Hard Skills : {{ item.hard_skill }}</p>
-            <p class="card-text">Interest : {{ item.interest }}</p>
+            <table>
+              <tr>
+                <td>Email</td>
+                <td>:&nbsp;{{ item.email }}</td>
+              </tr>
+              <tr>
+                <td>Soft Skills</td>
+                <td>:&nbsp;{{ item.soft_skill }}</td>
+              </tr>
+              <tr>
+                <td>Hard Skills &nbsp;</td>
+                <td>:&nbsp;{{ item.hard_skill }}</td>
+              </tr>
+              <tr>
+                <td>Interest</td>
+                <td>:&nbsp;{{ item.interest }}</td>
+              </tr>
+            </table>
 
             <div class="d-flex justify-content-between">
               <div>
