@@ -1,18 +1,35 @@
 <template>
   <div>
     <div v-show="!success">
-      <router-link to="/add">
-        <button type="submit" class="btn btn-primary mt-3 ml-3">
-          Add Data
-        </button>
-      </router-link>
+      <div class="d-flex justify-content-between">
+        <router-link to="/add">
+          <button type="submit" class="btn btn-primary mt-3 ml-3">
+            <font-awesome-icon icon="fa-solid fa-user-plus" />
+            Add Data
+          </button>
+        </router-link>
+        <form class="form-inline mr-3 mt-3">
+          <input
+            v-model="searchStudents"
+            id="searchStudents"
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search Student Name"
+            aria-label="Search"
+          />
+        </form>
+      </div>
+      <h1 class="text-center mt-5" v-if="studentsData.length === 0">
+        Data Not Found !
+      </h1>
       <div class="row justify-content-center">
         <div class="row my-5 col-12">
           <!-- Card -->
           <div
-            class="card-body border col-3 m-5"
-            v-for="(item, index) in studentsData"
+            class="card-body border col-3 m-5 studentsItem"
+            v-for="(item, index) in searchStudent"
             :key="index"
+            style="border-radius: 20px"
           >
             <h5 class="card-title">
               {{ item.nama + ", " + item.umur + " Years Old" }}
@@ -37,16 +54,20 @@
               </tr>
             </table>
 
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between mt-3">
               <div>
                 <router-link :to="{ path: '/update/' + item.id }">
-                  <button class="btn btn-primary mr-2">Update</button>
+                  <button class="btn btn-primary mr-2">
+                    <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+                    Update
+                  </button>
                 </router-link>
                 <router-link to="/">
                   <button
                     class="btn btn-danger"
-                    @click="deleteStudentsFunc(item.id)"
+                    @click="deleteStudentsFunc(item.id, item.nama)"
                   >
+                    <font-awesome-icon icon="fa-solid fa-trash" />
                     Delete
                   </button>
                 </router-link>
@@ -70,24 +91,25 @@
         </div>
       </div>
     </div>
-    <SuccessDelete v-show="success" />
+    <SuccessComponent v-show="success" />
   </div>
 </template>
 
 <script>
 import studentsService from "../services/studentsService";
-import SuccessDelete from "../components/SuccessDelete.vue";
+import SuccessComponent from "../components/SuccessComponent.vue";
 export default {
   name: "ViewDataComponent",
   data() {
     return {
-      studentsData: null,
+      studentsData: [],
       success: false,
+      searchStudents: "",
     };
   },
 
   components: {
-    SuccessDelete,
+    SuccessComponent,
   },
 
   methods: {
@@ -103,8 +125,8 @@ export default {
         });
     },
 
-    deleteStudentsFunc(id) {
-      if (confirm(`Yakin Ingin menghapus data ini ?`)) {
+    deleteStudentsFunc(id, nama) {
+      if (confirm(`Yakin Ingin menghapus ${nama} ?`)) {
         studentsService
           .deleteStudents(id)
           .then((response) => {
@@ -122,6 +144,14 @@ export default {
 
   mounted() {
     this.getStudents();
+  },
+
+  computed: {
+    searchStudent() {
+      return this.studentsData.filter((item) =>
+        item.nama.toLowerCase().includes(this.searchStudents.toLowerCase())
+      );
+    },
   },
 };
 </script>

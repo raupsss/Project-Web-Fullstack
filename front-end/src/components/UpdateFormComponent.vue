@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SuccessUpdate v-show="success" />
+    <SuccessComponent v-show="success" />
     <div v-show="!success">
       <router-link to="/">
         <button type="submit" class="btn btn-primary mt-3 ml-3">Back</button>
@@ -122,6 +122,7 @@
             </div>
           </div>
           <button name="submitForm" type="submit" class="btn btn-primary">
+            <font-awesome-icon icon="fa-solid fa-pen-to-square" />
             Update
           </button>
         </form>
@@ -132,7 +133,7 @@
 
 <script>
 import studentsService from "@/services/studentsService";
-import SuccessUpdate from "../components/SuccessUpdate.vue";
+import SuccessComponent from "../components/SuccessComponent.vue";
 export default {
   name: "UpdateFormComponent",
   data() {
@@ -151,7 +152,7 @@ export default {
     };
   },
   components: {
-    SuccessUpdate,
+    SuccessComponent,
   },
 
   methods: {

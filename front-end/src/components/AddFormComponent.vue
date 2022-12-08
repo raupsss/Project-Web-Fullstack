@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SuccessSubmit v-show="success" />
+    <SuccessComponent v-show="success" />
     <div v-show="!success">
       <router-link to="/">
         <button type="submit" class="btn btn-primary mt-3 ml-3">Back</button>
@@ -10,8 +10,9 @@
         <form
           @submit.prevent="insertStudentsFunc"
           class="col-8 border border-primary p-5"
+          style="border-radius: 10px"
         >
-          <h1 class="text-center mb-5">Add Form</h1>
+          <h1 class="text-center mb-5">Add Student</h1>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="nama">Student Name</label>
@@ -132,7 +133,7 @@
 
 <script>
 import studentsService from "@/services/studentsService";
-import SuccessSubmit from "../components/SuccessSubmit.vue";
+import SuccessComponent from "../components/SuccessComponent.vue";
 export default {
   name: "AddFormComponent",
   data() {
@@ -151,7 +152,7 @@ export default {
     };
   },
   components: {
-    SuccessSubmit,
+    SuccessComponent,
   },
   methods: {
     cekInput() {
